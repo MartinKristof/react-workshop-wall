@@ -1,10 +1,10 @@
-import { Posts } from '@o2/components/posts/Posts';
+import { PostsContainer } from '@o2/components/posts/PostsContainer';
 import React from 'react';
 
 const PostsPage = () => {
   return (
     <div>
-      <Posts userName="Jméno" />
+      <PostsContainer userName="Jméno" />
     </div>
   );
 };

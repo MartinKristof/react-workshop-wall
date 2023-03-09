@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { List } from 'reactstrap';
 import { TPost } from './types';
-import PostsItem from './PostsItem';
+import { PostsItem } from './PostsItem';
 
-const PostsList: FC<{ items: TPost[] }> = ({ items }) => {
+export const PostsList: FC<{ items: TPost[] }> = ({ items }) => {
   return (
     <List type="unstyled">
       {items.map(item => (
@@ -12,5 +12,3 @@ const PostsList: FC<{ items: TPost[] }> = ({ items }) => {
     </List>
   );
 };
-
-export default PostsList;

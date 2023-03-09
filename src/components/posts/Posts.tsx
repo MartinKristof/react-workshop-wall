@@ -1,64 +1,45 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { Col, Form, Row } from 'reactstrap';
-import { useForm, SubmitHandler } from 'react-hook-form';
 import { Heading } from '@o2/components/ui/Heading';
-import { InputField } from '../ui/InputField';
+import { InputField } from '@o2/components/ui/InputField';
 import { Button } from '@o2/components/ui/Button';
+import { PostsList } from './PostsList';
+import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form';
+import { Inputs } from './PostsContainer';
 import { TPost } from './types';
-import PostsList from './PostsList';
-
-type Inputs = {
-  content: string;
-};
-
-export const Posts: FC<{ userName: string }> = ({ userName }) => {
-  const [posts, setPosts] = useState<TPost[]>([]);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = ({ content }) => {
-    setPosts(currentPosts => {
-      const newPost: TPost = {
-        createdAt: Date.now(),
-        content,
-        author: userName,
-      };
-
-      reset();
-      return [...currentPosts, newPost];
-    });
-  };
-
-  return (
-    <section>
+export const Posts: FC<{
+  userName: string;
+  errors: FieldErrors<Inputs>;
+  register: UseFormRegister<Inputs>;
+  handleSubmit: UseFormHandleSubmit<Inputs>;
+  onSubmit: SubmitHandler<Inputs>;
+  posts: TPost[];
+}> = ({ userName, errors, register, handleSubmit, onSubmit, posts }) => (
+  <section>
+    <Row>
+      <Col>
+        <Heading>Posts by: {userName}</Heading>
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <InputField
+            inputType="textarea"
+            label="Content"
+            placeholder="Any content"
+            isValid={!Boolean(errors.content)}
+            errorMessage="Field is mandatory!"
+            {...register('content', { required: true })}
+          />
+          <Button>Send</Button>
+        </Form>
+      </Col>
       <Row>
         <Col>
-          <Heading>Posts by: {userName}</Heading>
+          <PostsList items={posts} />
         </Col>
       </Row>
-      <Row>
-        <Col>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <InputField
-              inputType="textarea"
-              label="Content"
-              placeholder="Any content"
-              isValid={!Boolean(errors.content)}
-              errorMessage="Field is mandatory!"
-              {...register('content', { required: true })}
-            />
-            <Button>Send</Button>
-          </Form>
-        </Col>
-        <Row>
-          <Col>
-            <PostsList items={posts} />
-          </Col>
-        </Row>
-      </Row>
-    </section>
-  );
-};
+    </Row>
+  </section>
+);

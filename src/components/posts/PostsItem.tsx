@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Card, CardBody, CardSubtitle, CardText, CardTitle } from 'reactstrap';
 import { TPost } from './types';
 
-const PostsItem: FC<{ createdAt: TPost['createdAt']; content: TPost['content']; author: TPost['author'] }> = ({
+export const PostsItem: FC<{ createdAt: TPost['createdAt']; content: TPost['content']; author: TPost['author'] }> = ({
   content,
   author,
   createdAt,
@@ -17,5 +17,3 @@ const PostsItem: FC<{ createdAt: TPost['createdAt']; content: TPost['content']; 
     </Card>
   </li>
 );
-
-export default PostsItem;
