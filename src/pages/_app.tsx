@@ -1,6 +1,14 @@
 import '@o2/styles/globals.css';
 import type { AppProps } from 'next/app';
+import 'bootstrap/dist/css/bootstrap.css';
+import { Container } from 'reactstrap';
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
-}
+const App = ({ Component, pageProps }: AppProps) => {
+  return (
+    <Container>
+      <Component {...pageProps} />
+    </Container>
+  );
+};
+
+export default App;
