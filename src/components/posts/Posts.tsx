@@ -5,20 +5,21 @@ import { InputField } from '@o2/components/ui/InputField';
 import { Button } from '@o2/components/ui/Button';
 import { PostsList } from './PostsList';
 import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form';
-import { Inputs } from './PostsContainer';
+import { TPostsInputs } from './PostsContainer';
 import { TPost } from './types';
+import { requiredFieldErrorMessage } from '@o2/constants';
 export const Posts: FC<{
-  userName: string;
-  errors: FieldErrors<Inputs>;
-  register: UseFormRegister<Inputs>;
-  handleSubmit: UseFormHandleSubmit<Inputs>;
-  onSubmit: SubmitHandler<Inputs>;
+  username: string;
+  errors: FieldErrors<TPostsInputs>;
+  register: UseFormRegister<TPostsInputs>;
+  handleSubmit: UseFormHandleSubmit<TPostsInputs>;
+  onSubmit: SubmitHandler<TPostsInputs>;
   posts: TPost[];
-}> = ({ userName, errors, register, handleSubmit, onSubmit, posts }) => (
+}> = ({ username, errors, register, handleSubmit, onSubmit, posts }) => (
   <section>
     <Row>
       <Col>
-        <Heading>Posts by: {userName}</Heading>
+        <Heading>Posts by: {username}</Heading>
       </Col>
     </Row>
     <Row>
@@ -29,7 +30,7 @@ export const Posts: FC<{
             label="Content"
             placeholder="Any content"
             isValid={!Boolean(errors.content)}
-            errorMessage="Field is mandatory!"
+            errorMessage={requiredFieldErrorMessage}
             {...register('content', { required: true })}
           />
           <Button>Send</Button>

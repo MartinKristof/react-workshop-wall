@@ -1,26 +1,30 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { TPost } from './types';
 import { Posts } from './Posts';
+import { UserContext } from '../../contexts/UserContext';
 
-export type Inputs = {
+export type TPostsInputs = {
   content: string;
 };
 
-export const PostsContainer: FC<{ userName: string }> = ({ userName }) => {
+export const PostsContainer: FC = () => {
   const [posts, setPosts] = useState<TPost[]>([]);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = ({ content }) => {
+  } = useForm<TPostsInputs>();
+
+  const { username } = useContext(UserContext);
+
+  const onSubmit: SubmitHandler<TPostsInputs> = ({ content }) => {
     setPosts(currentPosts => {
       const newPost: TPost = {
         createdAt: Date.now(),
         content,
-        author: userName,
+        author: username,
       };
 
       reset();
@@ -30,7 +34,7 @@ export const PostsContainer: FC<{ userName: string }> = ({ userName }) => {
 
   return (
     <Posts
-      userName={userName}
+      username={username}
       register={register}
       onSubmit={onSubmit}
       errors={errors}
