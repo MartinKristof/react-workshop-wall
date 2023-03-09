@@ -1,13 +1,34 @@
-import React, { FC } from 'react';
-import { FormGroup, Input, Label } from 'reactstrap';
+import React, { FC, forwardRef, Ref } from 'react';
+import { FormFeedback, FormGroup, Input, Label } from 'reactstrap';
 
 export const InputField: FC<{
   name: string;
   label: string;
+  isValid: boolean;
+  errorMessage?: string;
   inputType?: 'textarea' | 'text' | 'password';
-}> = ({ name, inputType = 'text', label }) => (
-  <FormGroup>
-    <Label for={name}>{label}</Label>
-    <Input id={name} name={name} type={inputType} />
-  </FormGroup>
+  required?: boolean;
+  placeholder?: string;
+}> = forwardRef(
+  (
+    { name, label, isValid, errorMessage = '', inputType = 'text', required = false, placeholder = '', ...restProps },
+    ref: Ref<HTMLInputElement>,
+  ) => (
+    <FormGroup>
+      <Label for={name}>{label}</Label>
+      <Input
+        innerRef={ref}
+        id={name}
+        invalid={!isValid}
+        name={name}
+        type={inputType}
+        required={required}
+        placeholder={placeholder}
+        {...restProps}
+      />
+      {!isValid && errorMessage && <FormFeedback>{errorMessage}</FormFeedback>}
+    </FormGroup>
+  ),
 );
+
+InputField.displayName = 'InputField';
