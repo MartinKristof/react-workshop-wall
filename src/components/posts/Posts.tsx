@@ -4,32 +4,30 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Heading } from '@o2/components/ui/Heading';
 import { InputField } from '../ui/InputField';
 import { Button } from '@o2/components/ui/Button';
-
-type TPost = {
-  createdAt: number;
-  author: string; // TODO add User type
-  content: string;
-};
+import { TPost } from './types';
+import PostsList from './PostsList';
 
 type Inputs = {
   content: string;
 };
 
 export const Posts: FC<{ userName: string }> = ({ userName }) => {
-  const [, setPosts] = useState<TPost[]>([]);
+  const [posts, setPosts] = useState<TPost[]>([]);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = data => {
+  const onSubmit: SubmitHandler<Inputs> = ({ content }) => {
     setPosts(currentPosts => {
       const newPost: TPost = {
         createdAt: Date.now(),
-        content: data.content,
+        content,
         author: userName,
       };
 
+      reset();
       return [...currentPosts, newPost];
     });
   };
@@ -56,7 +54,9 @@ export const Posts: FC<{ userName: string }> = ({ userName }) => {
           </Form>
         </Col>
         <Row>
-          <Col></Col>
+          <Col>
+            <PostsList items={posts} />
+          </Col>
         </Row>
       </Row>
     </section>
