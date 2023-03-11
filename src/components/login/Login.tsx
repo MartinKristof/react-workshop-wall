@@ -11,29 +11,27 @@ export const Login: FC<{
   register: UseFormRegister<TLoginInputs>;
   handleSubmit: UseFormHandleSubmit<TLoginInputs>;
   onSubmit: SubmitHandler<TLoginInputs>;
-}> = ({ errors, register, handleSubmit, onSubmit }) => {
-  return (
-    <section>
-      <Row>
-        <Col>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <InputField
-              label="Username"
-              {...register('username', { required: true })}
-              isValid={!Boolean(errors.username)}
-              errorMessage={requiredFieldErrorMessage}
-            />
-            <InputField
-              inputType="password"
-              label="Password"
-              {...register('password', { required: true })}
-              isValid={!Boolean(errors.password)}
-              errorMessage={requiredFieldErrorMessage}
-            />
-            <Button>Log in</Button>
-          </Form>
-        </Col>
-      </Row>
-    </section>
-  );
-};
+}> = ({ errors, register, handleSubmit, onSubmit }) => (
+  <section>
+    <Row>
+      <Col>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <InputField
+            label="Username"
+            {...register('username', { required: true })}
+            isValid={!Boolean(errors.username)}
+            errorMessage={requiredFieldErrorMessage}
+          />
+          <InputField
+            inputType="password"
+            label="Password"
+            {...register('password', { required: true })}
+            isValid={!Boolean(errors.password)}
+            errorMessage={requiredFieldErrorMessage}
+          />
+          <Button>Log in</Button>
+        </Form>
+      </Col>
+    </Row>
+  </section>
+);

@@ -5,8 +5,9 @@ export const Button: FC<{
   children: ReactNode;
   buttonType?: 'submit' | 'reset' | 'button';
   color?: 'primary' | 'secondary';
-}> = ({ children, buttonType = 'submit', color = 'primary' }) => (
-  <ReactStrapButton type={buttonType} color={color}>
+  onClick?: () => void;
+}> = ({ children, buttonType = 'submit', color = 'primary', onClick }) => (
+  <ReactStrapButton type={buttonType} color={color} onClick={onClick}>
     {children}
   </ReactStrapButton>
 );

@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Login } from './Login';
-import { UserContext } from '../../contexts/UserContext';
 import { useRouter } from 'next/router';
+import { useAuth } from '@o2/hooks/useAuth';
 
 export type TLoginInputs = {
   username: string;
@@ -15,11 +15,11 @@ export const LoginContainer = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<TLoginInputs>();
-  const { setUsername } = useContext(UserContext);
+  const { logIn } = useAuth();
   const router = useRouter();
 
   const onSubmit: SubmitHandler<TLoginInputs> = ({ username }) => {
-    setUsername(username);
+    logIn(username);
 
     router.push('/posts');
   };

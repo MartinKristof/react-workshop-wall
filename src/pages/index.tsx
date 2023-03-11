@@ -1,9 +1,12 @@
 import Head from 'next/head';
 import styles from '@o2/styles/Home.module.css';
-import { Heading } from '@o2/components/ui/Heading';
-import { InputField } from '@o2/components/ui/InputField';
+import Link from 'next/link';
+import { List } from 'reactstrap';
+import { useUserContext } from '@o2/hooks/useUserContext';
 
-export default function Home() {
+const Home = () => {
+  const { username } = useUserContext();
+
   return (
     <>
       <Head>
@@ -13,9 +16,21 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Heading tag="h2">Test</Heading>
-        <InputField name="test" label="popis" />
+        <List>
+          {!username && (
+            <li>
+              <Link href="/login">Login</Link>
+            </li>
+          )}
+          {username && (
+            <li>
+              <Link href="/posts">Posts</Link>
+            </li>
+          )}
+        </List>
       </main>
     </>
   );
-}
+};
+
+export default Home;
