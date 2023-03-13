@@ -1,15 +1,12 @@
-import { FC, ReactElement, useEffect, useState } from 'react';
+import { FC, ReactElement, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useUserContext } from '@o2/hooks/useUserContext';
+import { useInitialRender } from '@o2/hooks/useInitialRender';
 
 export const Auth: FC<{ children: ReactElement }> = ({ children }) => {
-  const [initialRenderComplete, setInitialRenderComplete] = useState(false);
+  const { initialRenderComplete } = useInitialRender();
   const router = useRouter();
   const { username } = useUserContext();
-
-  useEffect(() => {
-    setInitialRenderComplete(true);
-  }, []);
 
   useEffect(() => {
     if (initialRenderComplete && !username) {
